@@ -42,14 +42,15 @@ def lambda_handler(event, context):
     now = datetime.now(timezone.utc)
     ttl = int((now + timedelta(days=90)).timestamp())
     flag_field = "still_there_at" if flag == "still_there" else "its_gone_at"
+    count_field = "still_there_count" if flag == "still_there" else "its_gone_count"
 
     table = boto3.resource("dynamodb").Table(TABLE_NAME)
     try:
         response = table.update_item(
             Key={"pk": pk, "sk": sk},
-            UpdateExpression=f"SET {flag_field} = :ts, #t = :ttl",
+            UpdateExpression=f"SET {flag_field} = :ts, #t = :ttl ADD {count_field} :one",
             ExpressionAttributeNames={"#t": "ttl"},
-            ExpressionAttributeValues={":ts": now.isoformat(), ":ttl": ttl},
+            ExpressionAttributeValues={":ts": now.isoformat(), ":ttl": ttl, ":one": 1},
             ConditionExpression=Attr("pk").exists(),
             ReturnValues="ALL_NEW",
         )
