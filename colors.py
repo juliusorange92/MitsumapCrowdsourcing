@@ -1,0 +1,18 @@
+ALLOWED_COLORS = [
+    "BEIGE",
+    "BLACK",
+    "BLUE",
+    "BROWN",
+    "GOLD",
+    "GRAY",
+    "GREEN",
+    "MAROON",
+    "ORANGE",
+    "PURPLE",
+    "RED",
+    "SILVER",
+    "TAN",
+    "WHITE",
+    "YELLOW",
+    "UNKNOWN",
+]
