@@ -1,6 +1,5 @@
 import json
 import os
-import uuid
 from datetime import datetime, timezone, timedelta
 
 import boto3
@@ -54,11 +53,10 @@ def lambda_handler(event, context):
 
     now = datetime.now(timezone.utc)
     ttl = int((now + timedelta(days=90)).timestamp())
-    submission_id = str(uuid.uuid4())
 
     item = {
         "pk": f"{chain}#{location_id}",
-        "sk": f"SUBMISSION#{now.isoformat()}#{submission_id}",
+        "sk": f"SUBMISSION#{make}#{model}#{year}",
         "chain": chain,
         "location_id": location_id,
         "location_name": location["name"],
